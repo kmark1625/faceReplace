@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+
+  "name": "Lebron James Taking Talents to Your Web Browser",
+  "description": "This extension replaces all images on the web page you are viewing with kid-safe images of Lebron James that accurately reflect the mood of the situation.",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+  "content_scripts": [{
+    "matches": ["http://*/*","https://*/*"],
+    "js": ["content.js"]
+  }],
+  "permissions": [
+    "activeTab",
+    "storage"
+  ]
+}
