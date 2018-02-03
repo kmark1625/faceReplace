@@ -5,8 +5,8 @@ replaceImages(images, lebronUrl);
 
 function replaceImages(images, imageUrl) {
     for (var i = 0, l = images.length; i < l; i++) {
-	fetchUpdatedImage(images[i].src)
-        images[i].src = imageUrl;
+	var newImageUrl = fetchUpdatedImage(images[i].src)
+        images[i].src = newImageUrl;
     }
 }
 
@@ -17,9 +17,11 @@ function fetchUpdatedImage(imageUrl) {
     var xhr = new XMLHttpRequest();
 
     console.log("attempted host: " + host + "/process?url=" + uri);
+    xhr.overrideMimeType("application/json");
     xhr.open("GET", host + "/process?url=" + uri, false);
     xhr.send();
 
-    var result = xhr.responseText;
-    console.log("Response: " + result);
+    var result = JSON.parse(xhr.responseText);
+    console.log("Response: " + result.url);
+    return result.url;
 }
