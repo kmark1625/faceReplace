@@ -10,13 +10,10 @@ class ProcessImageServiceQuery:
 		print 'ProcessImageServiceQuery: run, url [', url, ']'
 
 		originalFilepath = _DirectoryManager.getOriginalFilepath(url)
-		imageId = _DirectoryManager.getImageId(url)
-		processedFilepath = _DirectoryManager.getProcessedFilepath(imageId)
+		processedFilepath = _DirectoryManager.getProcessedFilepath(url)
 
+		self.process(originalFilepath, processedFilepath, url)
+
+	def process(self, originalFilepath, processedFilepath, url):
 		_ImageDownloader.download(url, originalFilepath)
-		self.process(originalFilepath, processedFilepath, imageId)
-
-		return imageId
-
-	def process(self, originalFilepath, processedFilepath, imageId):
 		_Image.copy(originalFilepath, processedFilepath)

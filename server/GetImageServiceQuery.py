@@ -4,5 +4,5 @@ class GetImageServiceQuery:
 	def __init__(self):
 		pass
 
-	def run(self, imageId):
-		return _DirectoryManager.getProcessedFilepath(imageId)
+	def run(self, decodedUrl):
+		return _DirectoryManager.getProcessedFilepath(decodedUrl)
