@@ -11,22 +11,31 @@ class ProcessImageServiceQuery:
 	def run(self, url):
 		print('ProcessImageServiceQuery: run, url [', url, ']')
 
+		if url.startswith('data'):
+			raise ValueError('Bad link')
+
 		originalFilepath = _DirectoryManager.getOriginalFilepath(url)
 		processedFilepath = _DirectoryManager.getProcessedFilepath(url)
 		replacementImageFilepath = _DirectoryManager.getReplacementImageFilepath()
 
-		_ImageDownloader.download(url, originalFilepath)
+		_ImageDownloader.download(url, _DirectoryManager.getImageTmpFilepath(url), _DirectoryManager.getProcessedFilepath())
 		_Image.copy(originalFilepath, processedFilepath)
+
 
 		originalImage = cv2.imread(originalFilepath)
 		replacementImage = cv2.imread(replacementImageFilepath)
 
+		cv2.imwrite(processedFilepath, originalImage)
+
 		originalFace = self.getLargestFace(originalImage)
-		replacementFace = self.getLargestFace(replacementImage)
+		# replacementFace = self.getLargestFace(replacementImage)
 
-		processedImage = self.replaceFace(originalImage, originalFace, replacementImage, replacementFace)
+		# if originalFace == None or replacementFace == None:
+		# 	raise ValueError('No faces')
 
-		cv2.imwrite(processedFilepath, processedImage)
+		# processedImage = self.replaceFace(originalImage, originalFace, replacementImage, replacementFace)
+
+		# cv2.imwrite(processedFilepath, processedImage)
 
 
 	def getLargestFace(self, image):

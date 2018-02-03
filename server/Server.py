@@ -24,17 +24,28 @@ class Server:
 		decodedUrl = Server.parseUrl(encodedUrl)
 		print('Server: onProcessImage, encodedUrl [', encodedUrl, '], url [', decodedUrl, ']')
 
-		# try:
+		if decodedUrl.startswith('data'):
+			return jsonify({
+				'url' : decodedUrl
+			})
+
 		self.processImageServiceQuery.run(decodedUrl)
 
-		return jsonify({
-			'url' : 'https://localhost:3000/images?url=' + encodedUrl
-		})
-		# except:
-		# 	return jsonify({
-		# 		'url' : decodedUrl,
-		# 		'status' : 'failure'
-		# 	})
+		# return jsonify({
+		# 	'url' : 'https://localhost:3000/images?url=' + encodedUrl
+		# })
+
+		try:
+			self.processImageServiceQuery.run(decodedUrl)
+
+			return jsonify({
+				'url' : 'https://localhost:3000/images?url=' + encodedUrl
+			})
+		except:
+			return jsonify({
+				'url' : decodedUrl,
+				'status' : 'failure'
+			})
 
 	def onGetImage(self):
 		encodedUrl = request.args['url']

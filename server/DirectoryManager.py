@@ -4,6 +4,9 @@ class DirectoryManager:
 	def __init__(self):
 		pass
 
+	def getImageTmpFilepath(self, decodedUrl):
+		return 'database/' + str(urllib.parse.quote_plus(decodedUrl))
+
 	def getOriginalFilepath(self, decodedUrl):
 		return 'database/' + str(urllib.parse.quote_plus(decodedUrl)) + '-original.jpg'
 
