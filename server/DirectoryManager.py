@@ -1,18 +1,16 @@
-import urlparse, os, urllib
+import os, urllib.parse
 
 class DirectoryManager:
 	def __init__(self):
 		pass
 
-	def getExtension(self, url):
-		path = urlparse.urlparse(url).path
-		_, extension = os.path.splitext(path)
-		return extension if extension else '.jpg'
-
 	def getOriginalFilepath(self, decodedUrl):
-		return 'database/' + str(urllib.quote_plus(decodedUrl)) + '-original.jpg'
+		return 'database/' + str(urllib.parse.quote_plus(decodedUrl)) + '-original.jpg'
 
 	def getProcessedFilepath(self, decodedUrl):
-		return 'database/' + str(urllib.quote_plus(decodedUrl)) + '-processed.jpg'
+		return 'database/' + str(urllib.parse.quote_plus(decodedUrl)) + '-processed.jpg'
 
+	def getReplacementImageFilepath(self):
+		return 'database/lebron.jpg'
+		
 _DirectoryManager = DirectoryManager()

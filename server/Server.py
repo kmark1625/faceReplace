@@ -1,5 +1,5 @@
 import os
-import urllib
+import urllib.parse
 
 from flask import Flask, request, jsonify, send_file, redirect
 from GetImageServiceQuery import GetImageServiceQuery
@@ -22,24 +22,24 @@ class Server:
 	def onProcessImage(self):
 		encodedUrl = request.args['url']
 		decodedUrl = Server.parseUrl(encodedUrl)
-		print 'Server: onProcessImage, encodedUrl [', encodedUrl, '], url [', decodedUrl, ']'
+		print('Server: onProcessImage, encodedUrl [', encodedUrl, '], url [', decodedUrl, ']')
 
-		try:
-			self.processImageServiceQuery.run(decodedUrl)
+		# try:
+		self.processImageServiceQuery.run(decodedUrl)
 
-			return jsonify({
-				'url' : 'http://localhost:3000/images?url=' + encodedUrl
-			})
-		except:
-			return jsonify({
-				'url' : decodedUrl,
-				'status' : 'failure'
-			})
+		return jsonify({
+			'url' : 'https://localhost:3000/images?url=' + encodedUrl
+		})
+		# except:
+		# 	return jsonify({
+		# 		'url' : decodedUrl,
+		# 		'status' : 'failure'
+		# 	})
 
 	def onGetImage(self):
 		encodedUrl = request.args['url']
 		decodedUrl = Server.parseUrl(encodedUrl)
-		print 'Server: onGetImage, encodedUrl [', encodedUrl, '], url [', decodedUrl, ']'
+		print('Server: onGetImage, encodedUrl [', encodedUrl, '], url [', decodedUrl, ']')
 
 		try:
 			filepath = self.getImageServiceQuery.run(encodedUrl)
@@ -50,7 +50,7 @@ class Server:
 
 	@staticmethod
 	def parseUrl(encodedUrl):
-		return urllib.unquote(encodedUrl).decode('utf8')
+		return urllib.parse.unquote(encodedUrl)
 
 	@staticmethod
 	def parseUrlFromRequest(request):
