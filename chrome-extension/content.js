@@ -5,8 +5,11 @@ replaceImages(images, lebronUrl);
 
 function replaceImages(images, imageUrl) {
     for (var i = 0, l = images.length; i < l; i++) {
-	var newImageUrl = fetchUpdatedImage(images[i].src)
-        images[i].src = newImageUrl;
+	var oldImageUrl = images[i].src;
+	if (images[i].src) {
+	    var newImageUrl = fetchUpdatedImage(images[i].src)
+            images[i].src = newImageUrl;
+	}
     }
 }
 
